@@ -30,6 +30,21 @@ router.get('/get/playlist/:playlistId', passport.authenticate('jwt', { session: 
     return res.status(200).json(playlist)
 })
 
+
+// Api to get my playlist
+router.get(
+    "/get/me",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+        const artistId = req.user._id;
+
+        const playlists = await Playlist.find({ owner: artistId }).populate(
+            "owner"
+        );
+        return res.status(200).json({ data: playlists });
+    }
+);
+
 //  Api to get a playlist of artist by id
 router.get('/get/artist/:artistId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const artistId = req.params.artistId
@@ -40,7 +55,7 @@ router.get('/get/artist/:artistId', passport.authenticate('jwt', { session: fals
     }
 
     const playlists = await Playlist.find({ owner: artistId })
-    return res.status(200).json(playlists)
+    return res.status(200).json({ success: true, playlists })
 })
 
 // Api to add songs in my playlist
