@@ -13,8 +13,13 @@ const passport = require('passport')
 const cors = require("cors");
 const Port = process.env.PORT || 3001;
 
+const corsOptions = {
+    origin: "https://espotify-rust.vercel.app/",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json())
 
 

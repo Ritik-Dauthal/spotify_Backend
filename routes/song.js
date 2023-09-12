@@ -43,8 +43,11 @@ router.get('/get/artist/:artistId', passport.authenticate("jwt", { session: fals
 router.get('/get/songname/:songName', passport.authenticate("jwt", { session: false }), async (req, res) => {
   const { songName } = req.params;
 
-  const songs = await Song.find({ name: songName });
-  res.status(200).json({ data: songs })
-})
+  const regexPattern = new RegExp(songName, 'i');
+  const songs = await Song.find({ name: { $regex: regexPattern } }).populate("artist");
+
+  res.status(200).json({ data: songs });
+});
+
 
 module.exports = router
