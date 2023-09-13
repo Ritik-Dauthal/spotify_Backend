@@ -19,11 +19,11 @@ router.post('/create', passport.authenticate('jwt', { session: false }), async (
     return res.status(200).json(playlist)
 })
 
-// Api to get playlist by id
+// Api to get songs of playlist by playlistId ( added by user)
 router.get('/get/playlist/:playlistId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const playlistId = req.params.playlistId
 
-    const playlist = await Playlist.findOne({ _id: playlistId })
+    const playlist = await Playlist.findOne({ _id: playlistId }).populate({ path: 'songs', populate: { path: 'artist' } })
     if (!playlist) {
         res.status(301).json({ err: "Invalid Id" })
     }
