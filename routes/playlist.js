@@ -48,10 +48,9 @@ router.get(
 //  Api to get a playlist of artist by id
 router.get('/get/artist/:artistId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const artistId = req.params.artistId
-
     const artist = await User.findOne({ _id: artistId })
     if (!artist) {
-        return res.status(304).json({ err: "Invalid Artist ID" })
+        return res.status(404).json({ err: "Invalid Artist ID" })
     }
 
     const playlists = await Playlist.find({ owner: artistId })
