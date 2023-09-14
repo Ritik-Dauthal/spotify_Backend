@@ -29,7 +29,7 @@ router.get('/get/mysongs', passport.authenticate("jwt", { session: false }), asy
 
 // Api for getting all songs from db
 router.get('/get/allsongs', async (req, res) => {
-  const songs = await Song.find()
+  const songs = await Song.find().populate('artist')
   res.status(200).json({ success: true, data: songs })
 })
 
