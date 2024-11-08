@@ -35,7 +35,7 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
     });
 }))
 
-const uri = "mongodb+srv://ritikdauthal12345:" + process.env.Mongo_Password + "@mycluster.nykqyhm.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://ritikdauthal12345:" + process.env.Mongo_Password + "@mycluster.nykqyhm.mongodb.net/test?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, }).then((i) => { console.log("connected") })
 
